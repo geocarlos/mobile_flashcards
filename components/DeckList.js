@@ -46,7 +46,7 @@ export default createStackNavigator({
   Decks:{
     screen: DeckList,
     navigationOptions:{
-      title: 'Mobile Cards'
+      title: 'Mobile Flashcards'
     }
   },
   Deck:{
