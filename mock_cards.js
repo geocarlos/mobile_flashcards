@@ -1,6 +1,5 @@
 export default function getMockDecks() {
-  return  [
-    {
+  return [{
       title: 'React',
       questions: [{
           question: 'What is React?',
@@ -18,6 +17,22 @@ export default function getMockDecks() {
         question: 'What is a closure?',
         answer: 'The combination of a function and the lexical environment within which that function was declared.'
       }]
+    },
+    {
+      title: 'Redux',
+      questions: [{
+          question: 'What are actions?',
+          answer: 'Actions are payloads of information that send data from your application to your store.'
+        },
+        {
+          question: 'What are reducers?',
+          answer: 'Reducers specify how the application\'s state changes in response to actions sent to the store.'
+        },
+        {
+          question: 'What is the Store?',
+          answer: 'The Store is the object that brings actions and reducers together.'
+        }
+      ]
     }
   ]
 }

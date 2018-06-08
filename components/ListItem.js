@@ -3,17 +3,18 @@ import {View, Text, TouchableOpacity} from 'react-native';
 
 class ListItem extends PureComponent {
   _onPress = () => {
-    this.props.onPressItem(this.props.id);
+    this.props.onPressItem(this.props.item.id, this.props.item);
   };
 
   render() {
-    const {cards} = this.props;
+    const {item} = this.props;
+    const cards = item.questions.length;
 
     return (
       <TouchableOpacity onPress={this._onPress}>
         <View style={styles.container}>
           <Text style={styles.deckTitle}>
-            {this.props.title}
+            {item.title}
           </Text>
           <Text style={styles.cardCount}>{cards} {`${cards == 1 ? 'card' : 'cards'}`}</Text>
         </View>
