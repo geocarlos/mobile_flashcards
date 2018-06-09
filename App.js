@@ -16,7 +16,10 @@ const DeckStack = createStackNavigator({
     }
   },
   Deck:{
-    screen: Deck
+    screen: Deck,
+    navigationOptions:({navigation})=>({
+      title: `${navigation.state.params.pageTitle} Deck`
+    })
   }
 })
 

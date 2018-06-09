@@ -7,7 +7,7 @@ class ListItem extends PureComponent {
 
   _onPress = () => {
     this.props.dispatch(getDeck({deck: this.props.deck}))
-    this.props.onPressItem(this.props.deck.title);
+    this.props.onPressItem(this.props.deck.title, {pageTitle: this.props.deck.title});
   };
 
   render() {

@@ -4,7 +4,6 @@ import {combineReducers} from 'redux';
 function decks(state = [], action){
   switch(action.type){
     case GET_DECKS:
-      console.log("Decklist in Reducer: ", state)
       return action.deckList;
     default:
       return state;
@@ -21,4 +20,3 @@ function deck(state = {}, action){
 }
 
 export default combineReducers({decks, deck});
-// export default reducer;

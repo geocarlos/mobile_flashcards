@@ -15,8 +15,8 @@ class DeckList extends PureComponent{
 
   _keyExtractor = (item, title) => item.title;
 
-  _onPressItem = (id: string) => {
-    this.props.navigation.navigate('Deck')
+  _onPressItem = (id: string, pageTitle) => {
+    this.props.navigation.navigate('Deck', pageTitle)
   };
 
   _renderItem = ({item}) => (
@@ -27,7 +27,6 @@ class DeckList extends PureComponent{
   );
 
   render(){
-    console.log('In render: ',this.props.decks.deckList)
     return (
       <View>
         <Text style={styles.header}>DECKS</Text>
