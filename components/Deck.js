@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 
-class Deck extends Component{
+class Deck extends PureComponent{
 
   addCard(){
-    console.log("Go to Add Card view");
+    this.props.navigation.navigate('NewDeck')
   }
 
-  starQuiz(){
-    console.log("Go to Quiz view");
+  startQuiz(){
+    this.props.navigation.navigate('Quiz')
   }
 
   render() {
@@ -23,12 +23,12 @@ class Deck extends Component{
           </Text>
           <Text style={styles.cardCount}>{cards} {`${cards == 1 ? 'card' : 'cards'}`}</Text>
           <View style={styles.buttons}>
-            <TouchableOpacity onPress={this.addCard}>
+            <TouchableOpacity onPress={this.addCard.bind(this)}>
               <View style={styles.button}>
                 <Text style={styles.buttonText}>Add Card</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.starQuiz}>
+            <TouchableOpacity onPress={this.startQuiz.bind(this)}>
               <View style={styles.button}>
                 <Text style={styles.buttonText}>Start Quiz</Text>
               </View>

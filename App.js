@@ -3,6 +3,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import DeckList from './components/DeckList';
 import Deck from './components/Deck';
+import Quiz from './components/Quiz';
+import NewDeck from './components/NewDeck';
 import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import reducer from './reducers';
@@ -20,6 +22,18 @@ const DeckStack = createStackNavigator({
     navigationOptions:({navigation})=>({
       title: `${navigation.state.params.pageTitle} Deck`
     })
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions:{
+      title: 'Quiz'
+    }
+  },
+  NewDeck:{
+    screen: NewDeck,
+    navigationOptions:{
+      title: 'New Deck'
+    }
   }
 })
 
