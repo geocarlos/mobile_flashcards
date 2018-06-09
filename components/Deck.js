@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 class Deck extends PureComponent{
 
   addCard(){
-    this.props.navigation.navigate('NewDeck')
+    this.props.navigation.navigate('NewQuestion')
   }
 
   startQuiz(){

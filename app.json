@@ -1,5 +1,8 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0"
+    "name": "Mobile Flashcards",
+    "slug": "mobile-flashcards",
+    "sdkVersion": "27.0.0",
+    "orientation": "portrait"
   }
 }

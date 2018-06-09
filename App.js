@@ -5,6 +5,7 @@ import DeckList from './components/DeckList';
 import Deck from './components/Deck';
 import Quiz from './components/Quiz';
 import NewDeck from './components/NewDeck';
+import NewQuestion from './components/NewQuestion';
 import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import reducer from './reducers';
@@ -27,6 +28,12 @@ const DeckStack = createStackNavigator({
     screen: Quiz,
     navigationOptions:{
       title: 'Quiz'
+    }
+  },
+  NewQuestion:{
+    screen: NewQuestion,
+    navigationOptions:{
+      title: 'Add Card'
     }
   },
   NewDeck:{
