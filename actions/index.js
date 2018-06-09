@@ -1,5 +1,4 @@
-export const GET_DECKS = 'GET_DECKS';
-export const GET_DECK = 'GET_DECK';
+import {GET_DECKS, GET_DECK} from './types'
 
 export function getDecks(deckList=[]){
   return {
@@ -8,7 +7,7 @@ export function getDecks(deckList=[]){
   }
 }
 
-export function getDeck(deck={}){
+export function getDeck(deck){
   return {
     type: GET_DECK,
     deck

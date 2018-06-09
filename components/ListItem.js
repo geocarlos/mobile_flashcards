@@ -1,20 +1,24 @@
 import React, {PureComponent} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
+import {connect} from 'react-redux';
+import {getDeck} from '../actions'
 
 class ListItem extends PureComponent {
+
   _onPress = () => {
-    this.props.onPressItem(this.props.item.id, this.props.item);
+    this.props.dispatch(getDeck({deck: this.props.deck}))
+    this.props.onPressItem(this.props.deck.title);
   };
 
   render() {
-    const {item} = this.props;
-    const cards = item.questions.length;
+    const {deck} = this.props;
+    const cards = deck.questions.length;
 
     return (
       <TouchableOpacity onPress={this._onPress}>
         <View style={styles.container}>
           <Text style={styles.deckTitle}>
-            {item.title}
+            {deck.title}
           </Text>
           <Text style={styles.cardCount}>{cards} {`${cards == 1 ? 'card' : 'cards'}`}</Text>
         </View>
@@ -52,4 +56,10 @@ const styles = {
   }
 }
 
-export default ListItem;
+function mapStateToProps({deck}){
+  return {
+    deck
+  }
+}
+
+export default connect()(ListItem);

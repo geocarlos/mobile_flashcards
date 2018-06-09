@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import {View, Text} from 'react-native';
+import {connect} from 'react-redux';
 
-export default class Deck extends Component{
+class Deck extends Component{
   render() {
-    const {item} = this.props.navigation.state.params;
-    const cards = item.questions.length;
+    const {deck} = this.props.deck;
+    const cards = deck.questions.length;
 
     return (
         <View style={styles.container}>
           <Text style={styles.deckTitle}>
-            {item.title}
+            {deck.title}
           </Text>
           <Text style={styles.cardCount}>{cards} {`${cards == 1 ? 'card' : 'cards'}`}</Text>
         </View>
@@ -45,3 +46,11 @@ const styles = {
     padding: 10,
   }
 }
+
+function mapStateToProps({deck}){
+  return {
+    deck
+  }
+}
+
+export default connect(mapStateToProps)(Deck);

@@ -1,31 +1,38 @@
 import React, {PureComponent} from 'react';
 import {Text, View, FlatList} from 'react-native';
 import ListItem from './ListItem'
+import { getDecks, getDeck } from '../actions';
+import { connect } from 'react-redux';
 import getMockDecks from '../mock_cards';
-import Deck from './Deck';
-import { createStackNavigator } from 'react-navigation';
 
 class DeckList extends PureComponent{
 
+  componentDidMount(){
+    this.props.dispatch(getDecks({
+      deckList: getMockDecks()
+    }));
+  }
+
   _keyExtractor = (item, title) => item.title;
 
-  _onPressItem = (id: string, item) => {
-    this.props.navigation.navigate('Deck', {item})
+  _onPressItem = (id: string) => {
+    this.props.navigation.navigate('Deck')
   };
 
   _renderItem = ({item}) => (
     <ListItem
       onPressItem={this._onPressItem}
-      item={item}
+      deck={item}
     />
   );
 
   render(){
+    console.log('In render: ',this.props.decks.deckList)
     return (
       <View>
         <Text style={styles.header}>DECKS</Text>
         <FlatList
-          data={getMockDecks()}
+          data={this.props.decks.deckList}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
         />
@@ -42,14 +49,12 @@ styles = {
   }
 }
 
-export default createStackNavigator({
-  Decks:{
-    screen: DeckList,
-    navigationOptions:{
-      title: 'Mobile Flashcards'
-    }
-  },
-  Deck:{
-    screen: Deck
+function mapStateToProps({decks}){
+  return {
+    decks
   }
-});
+}
+
+export default connect(
+  mapStateToProps
+)(DeckList);
