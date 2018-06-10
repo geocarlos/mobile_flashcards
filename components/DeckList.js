@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {Text, View, FlatList} from 'react-native';
+import {Text, View, FlatList, StyleSheet} from 'react-native';
 import ListItem from './ListItem'
 import { getDecks, getDeck } from '../actions';
 import { connect } from 'react-redux';
@@ -39,13 +39,13 @@ class DeckList extends PureComponent{
   }
 }
 
-styles = {
+const styles = StyleSheet.create({
   header: {
     color: '#d83',
     fontSize: 35,
     marginLeft: 10
   }
-}
+})
 
 function mapStateToProps({decks}){
   return {

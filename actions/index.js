@@ -1,4 +1,9 @@
-import {GET_DECKS, GET_DECK} from './types'
+import {
+  GET_DECKS,
+  GET_DECK,
+  ADD_DECK,
+  ADD_CARD
+} from './types'
 
 export function getDecks(deckList=[]){
   return {
@@ -11,5 +16,19 @@ export function getDeck(deck){
   return {
     type: GET_DECK,
     deck
+  }
+}
+
+export function addDeck(deck){
+  return {
+    type: ADD_DECK,
+    deck
+  }
+}
+
+export function addCard(card){
+  return {
+    type: ADD_CARD,
+    card
   }
 }

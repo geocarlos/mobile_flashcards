@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import {getDeck} from '../actions'
 
@@ -27,7 +27,7 @@ class ListItem extends PureComponent {
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     borderWidth: 1,
@@ -54,7 +54,7 @@ const styles = {
     textAlign: 'center',
     padding: 10,
   }
-}
+})
 
 function mapStateToProps({deck}){
   return {

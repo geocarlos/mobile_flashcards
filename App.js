@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { createStackNavigator, createMaterialTopTabNavigator} from 'react-navigation';
 import DeckList from './components/DeckList';
 import Deck from './components/Deck';
@@ -21,7 +21,7 @@ const Tabs = createMaterialTopTabNavigator({
   NewDeck:{
     screen: NewDeck,
     navigationOptions:{
-      tabBarLabel: 'New Deck'
+      tabBarLabel: 'New Deck',
     }
   },
 },{
@@ -78,12 +78,3 @@ export default class App extends React.PureComponent {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    padding: 10,
-    marginTop: 20
-  },
-});
