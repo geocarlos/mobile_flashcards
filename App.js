@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator, createMaterialTopTabNavigator} from 'react-navigation';
 import DeckList from './components/DeckList';
 import Deck from './components/Deck';
 import Quiz from './components/Quiz';
@@ -11,11 +11,41 @@ import {Provider} from 'react-redux';
 import reducer from './reducers';
 import thunk from 'redux-thunk';
 
-const DeckStack = createStackNavigator({
+const Tabs = createMaterialTopTabNavigator({
   Decks:{
     screen: DeckList,
     navigationOptions:{
-      title: 'Mobile Flashcards'
+      tabBarLabel: 'Decks'
+    }
+  },
+  NewDeck:{
+    screen: NewDeck,
+    navigationOptions:{
+      tabBarLabel: 'New Deck'
+    }
+  },
+},{
+  tabBarOptions: {
+    labelStyle: {
+      color: '#d83',
+      fontSize: 20,
+      paddingTop: 15
+    },
+    tabStyle: {
+      height: 100,
+    },
+    style: {
+      backgroundColor: '#eee',
+    },
+  }
+}
+)
+
+const DeckStack = createStackNavigator({
+  Tabs:{
+    screen: Tabs,
+    navigationOptions:{
+      header: null
     }
   },
   Deck:{
@@ -34,12 +64,6 @@ const DeckStack = createStackNavigator({
     screen: NewQuestion,
     navigationOptions:{
       title: 'Add Card'
-    }
-  },
-  NewDeck:{
-    screen: NewDeck,
-    navigationOptions:{
-      title: 'New Deck'
     }
   }
 })

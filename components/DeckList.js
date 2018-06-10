@@ -29,7 +29,6 @@ class DeckList extends PureComponent{
   render(){
     return (
       <View>
-        <Text style={styles.header}>DECKS</Text>
         <FlatList
           data={this.props.decks.deckList}
           keyExtractor={this._keyExtractor}

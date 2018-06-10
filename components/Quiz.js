@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {
   View,
@@ -10,29 +10,40 @@ import {
 
 /**
   The code to flip the card has been adapted from the one found
-  in this repo: https://github.com/browniefed/examples/tree/animated_basic/flip
+  in this repo: https://github.com/browniefed/examples/tree/animated_basic/flip.
+  Two views are overlapped, then they are spinned 180 degrees, and their
+  opacity is changed from 1 to 0 and from 0 to 1. In this case, the view for
+  the answer goes on top of the view for the question. Because of that, in order
+  to click on the "View Answer" button, I need to remove the Answer view,
+  instead of just setting its opacity to 0. So, the Answer view will be rendered
+  or not, depending on the value of the "showA" property in this component's state.
 */
 
-class Quiz extends PureComponent{
+class Quiz extends Component{
 
   state = {
     card: 0,
     score: 0,
-    flipValue: 0
+    flipValue: 0,
+    showA: false
   }
 
   goToNextCard(point){
+
+    if(this.state.flipValue >= 90){
+      this.flipCard();
+    }
+
     const {deck} = this.props.deck;
 
     if(this.state.card < deck.questions.length){
       this.setState({
         ...this.state,
         card: this.state.card + 1,
-        score: this.state.score + point
+        score: this.state.score + point,
+        showA: false
       })
-      if(this.state.flipValue >= 90){
-        this.flipCard();
-      }
+
     }
   }
 
@@ -61,6 +72,7 @@ class Quiz extends PureComponent{
   }
 
   flipCard() {
+    this.setState({showA: !this.state.showA})
     if (this.state.flipValue >= 90) {
       Animated.spring(this.animatedValue,{
         toValue: 0,
@@ -92,6 +104,17 @@ class Quiz extends PureComponent{
     this.props.navigation.goBack();
   }
 
+  restartQuiz(){
+    if(this.state.flipValue >= 90){
+      this.flipCard();
+    }
+    this.setState({
+      card: 0,
+      score: 0,
+      showA: false
+    });
+  }
+
   render() {
     const frontAnimatedStyle = {
       transform: [
@@ -105,10 +128,9 @@ class Quiz extends PureComponent{
     }
 
     const {deck} = this.props.deck;
-    const {card, score} = this.state;
+    const {card, score, showA} = this.state;
 
     if(card >= deck.questions.length){
-      console.log("Springing?")
       this.spring()
     }
 
@@ -118,33 +140,47 @@ class Quiz extends PureComponent{
           <Animated.View style={{transform: [{scale: this.springValue}] }}>
             <View style={styles.ending}>
               <Text style={{fontSize: 45}}>Quiz Completed</Text>
-              <Text style={{fontSize: 30}}>Your score is {score} points</Text>
+              <Text style={{fontSize: 30, textAlign: 'center'}}>
+                You&#39;ve got {score} correct answers
+              </Text>
             </View>
             <View style={styles.buttons}>
+              <TouchableOpacity onPress={this.restartQuiz.bind(this)}>
+                <View style={styles.button}>
+                  <Text style={styles.buttonText}>Restart Quiz</Text>
+                </View>
+              </TouchableOpacity>
               <TouchableOpacity onPress={this._goBack.bind(this)}>
                 <View style={styles.button}>
-                  <Text style={styles.buttonText}>OK</Text>
+                  <Text style={styles.buttonText}>Back to Deck</Text>
                 </View>
               </TouchableOpacity>
             </View>
           </Animated.View> :
           <View>
+            <Text style={{marginLeft: 10, fontSize: 20}}>
+              {card+1}/{deck.questions.length}
+            </Text>
             <Animated.View style={[styles.flipCard, frontAnimatedStyle, {opacity: this.frontOpacity}]}>
               <Text style={styles.flipText}>
                 {deck.questions[card].question}
               </Text>
-              <TouchableOpacity onPress={() => this.flipCard()}>
-                <Text style={styles.qa}>View Answer</Text>
+              <TouchableOpacity onPress={this.flipCard.bind(this)}>
+                <View style={[styles.button, {padding: 10, marginTop: 15}]}>
+                  <Text style={styles.qa}>View Answer</Text>
+                </View>
               </TouchableOpacity>
             </Animated.View>
-            <Animated.View style={[styles.flipCard, styles.flipCardBack, backAnimatedStyle, {opacity: this.backOpacity}]}>
+            {showA && <Animated.View style={[styles.flipCard, styles.flipCardBack, backAnimatedStyle, {opacity: this.backOpacity}]}>
               <Text style={styles.flipText}>
                 {deck.questions[card].answer}
               </Text>
-              <TouchableOpacity onPress={() => this.flipCard()}>
-                <Text style={styles.qa}>View Question</Text>
+              <TouchableOpacity onPress={this.flipCard.bind(this)}>
+                <View style={[styles.button, {padding: 10, marginTop: 15}]}>
+                  <Text style={styles.qa}>View Question</Text>
+                </View>
               </TouchableOpacity>
-            </Animated.View>
+            </Animated.View>}
             <View style={styles.buttons}>
               <TouchableOpacity onPress={this.goToNextCard.bind(this, 1)}>
                 <View style={styles.button}>
@@ -171,7 +207,7 @@ const styles = StyleSheet.create({
   },
   flipCard: {
     minWidth: '100%',
-    height: 350,
+    height: 330,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#e0e0e0',
@@ -180,7 +216,7 @@ const styles = StyleSheet.create({
   flipCardBack: {
     backgroundColor: "#ededed",
     position: "absolute",
-    top: 0,
+    top: 25,
   },
   flipText: {
     width: 300,
@@ -190,7 +226,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   qa: {
-    marginTop: 50,
+    // marginTop: 50,
     fontSize: 25,
     color: '#f00'
   },

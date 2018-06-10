@@ -45,12 +45,12 @@ const styles = {
     padding: 15
   },
   deckTitle:{
-    fontSize: 25,
+    fontSize: 30,
     textAlign: 'center',
     padding: 10,
   },
   cardCount:{
-    fontSize: 15,
+    fontSize: 20,
     textAlign: 'center',
     padding: 10,
   }
