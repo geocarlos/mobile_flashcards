@@ -11,11 +11,22 @@ function decks(state = [], action){
     case GET_DECKS:
       return action.deckList;
     case ADD_DECK:
-      console.log(state)
       return {
         ...state,
-        deckList: state.deckList.concat( action.deck)
+        deckList: state.deckList.concat(action.deck)
       }
+    case ADD_CARD:
+      const newState = Object.assign({}, state);
+      newState.deckList.map((d, i)=>{
+        if(d.title === action.card.deck){
+          newState.deckList[i].questions.push({
+            question: action.card.question,
+            answer: action.card.answer
+          });
+        }
+        return null;
+      });
+      return {...newState};
     default:
       return state;
   }

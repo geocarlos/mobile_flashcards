@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, Alert} from 'react-native';
 import {connect} from 'react-redux';
 
 class Deck extends PureComponent{
@@ -9,7 +9,14 @@ class Deck extends PureComponent{
   }
 
   startQuiz(){
-    this.props.navigation.navigate('Quiz')
+    if(this.props.deck.deck.questions.length > 0){
+      this.props.navigation.navigate('Quiz');
+    } else {
+      Alert.alert(
+        "Deck empty!",
+        "Click on Add Card to add cards to this deck."
+      )
+    }
   }
 
   render() {

@@ -11,8 +11,7 @@ class ListItem extends PureComponent {
   };
 
   render() {
-    const {deck} = this.props;
-    const cards = deck.questions.length;
+    const {deck, cards} = this.props;
 
     return (
       <TouchableOpacity onPress={this._onPress}>

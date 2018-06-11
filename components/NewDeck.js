@@ -10,7 +10,7 @@ import {
   Alert
 } from 'react-native';
 import {connect} from 'react-redux';
-import {addDeck} from '../actions'
+import {addDeck, getDeck} from '../actions'
 
 class NewDeck extends Component{
 
@@ -55,16 +55,30 @@ class NewDeck extends Component{
     const checkList = this.props.decks.deckList.filter(function(d){
       return d.title === dName;
     });
-  
+
     if(checkList.length === 0){
       this.props.dispatch(addDeck({
         title: this.state.deckName,
         questions: []
       }))
       this.setState({deckName: ""})
+      Alert.alert(
+        `Deck ${dName} successfully added!`,
+        'Would like to go to its page?',
+        [
+          {text: 'Yes', onPress: () => {
+            this.props.dispatch(getDeck({
+              deck: this.props.decks.deckList[this.props.decks.deckList.length - 1]
+            }))
+            this.props.navigation.navigate('Deck', {pageTitle: dName})
+          }},
+          {text: 'Not now', onPress: () => {}},
+        ],
+        { cancelable: false }
+      )
     } else {
-    Alert.alert("Deck already exists!", `A deck named ${dName} already exists!
-      You may add questions to it then...`);
+    Alert.alert("Deck already exists!",
+      `A deck named ${dName} already exists! You may add questions to it then...`);
     }
   }
 
@@ -124,7 +138,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 3,
     marginLeft: '5%',
-    marginRight: '5%'
+    marginRight: '5%',
+    paddingLeft: 5,
+    paddingRight: 5
   },
   button:{
     borderWidth: 1,
