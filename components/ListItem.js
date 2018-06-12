@@ -1,12 +1,12 @@
 import React, {PureComponent} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
-import {getDeck} from '../actions'
+import {getDeck} from '../actions';
 
 class ListItem extends PureComponent {
 
   _onPress = () => {
-    this.props.dispatch(getDeck({deck: this.props.deck}))
+    this.props.dispatch(getDeck(this.props.deck))
     this.props.onPressItem(this.props.deck.title, {pageTitle: this.props.deck.title});
   };
 

@@ -10,7 +10,8 @@ import {
   Alert
 } from 'react-native';
 import {connect} from 'react-redux';
-import {addDeck, getDeck} from '../actions'
+import {getDeck} from '../actions';
+import {saveDeckTitle} from '../actions/thunk_helpers';
 
 class NewDeck extends Component{
 
@@ -22,8 +23,8 @@ class NewDeck extends Component{
   /**
     All of the keyboard-related code is necessary because KeyboardAvoidingView
     is currently not working with Android. If this app was to be developed
-    for iOS, all of this might be replaced with the KeyboardAvoidingView component.
-  */
+    for iOS, all of this might be replaced with the KeyboardAvoidingView component.*/
+    
   componentDidMount () {
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow.bind(this));
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide.bind(this));
@@ -52,12 +53,15 @@ class NewDeck extends Component{
       Alert.alert("Title field empty!","You must enter a name for your deck!");
       return;
     }
-    const checkList = this.props.decks.deckList.filter(function(d){
-      return d.title === dName;
-    });
+    checkList = [];
+    if(this.props.decks.deckList){
+      checkList = this.props.decks.deckList.filter(function(d){
+        return d.title === dName;
+      });
+    }
 
     if(checkList.length === 0){
-      this.props.dispatch(addDeck({
+      this.props.dispatch(saveDeckTitle({
         title: this.state.deckName,
         questions: []
       }))
@@ -67,9 +71,9 @@ class NewDeck extends Component{
         'Would like to go to its page?',
         [
           {text: 'Yes', onPress: () => {
-            this.props.dispatch(getDeck({
-              deck: this.props.decks.deckList[this.props.decks.deckList.length - 1]
-            }))
+            this.props.dispatch(getDeck(
+              this.props.decks.deckList[this.props.decks.deckList.length - 1]
+            ))
             this.props.navigation.navigate('Deck', {pageTitle: dName})
           }},
           {text: 'Not now', onPress: () => {}},

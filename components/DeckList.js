@@ -1,9 +1,9 @@
 import React, {PureComponent} from 'react';
 import {Text, View, FlatList, StyleSheet} from 'react-native';
 import ListItem from './ListItem'
-import { getDecks, getDeck } from '../actions';
+import { getDeck } from '../actions';
+import { getDeckList } from '../actions/thunk_helpers';
 import { connect } from 'react-redux';
-import getMockDecks from '../mock_cards';
 
 class DeckList extends PureComponent{
 
@@ -12,9 +12,7 @@ class DeckList extends PureComponent{
   }
 
   componentDidMount(){
-    this.props.dispatch(getDecks({
-      deckList: getMockDecks()
-    }));
+    this.props.dispatch(getDeckList());
 
     /**
       FlatList rerenders if a new deck is added to the DeckList, but it just

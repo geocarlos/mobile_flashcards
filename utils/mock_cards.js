@@ -1,5 +1,7 @@
 export default function getMockDecks() {
-  return [{
+
+  return {
+    React: {
       title: 'React',
       questions: [{
           question: 'What is React?',
@@ -11,14 +13,14 @@ export default function getMockDecks() {
         }
       ]
     },
-    {
+    JavaScript: {
       title: 'JavaScript',
       questions: [{
         question: 'What is a closure?',
         answer: 'The combination of a function and the lexical environment within which that function was declared.'
       }]
     },
-    {
+    Redux: {
       title: 'Redux',
       questions: [{
           question: 'What are actions?',
@@ -34,5 +36,5 @@ export default function getMockDecks() {
         }
       ]
     }
-  ]
+  }
 }

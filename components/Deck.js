@@ -9,7 +9,7 @@ class Deck extends PureComponent{
   }
 
   startQuiz(){
-    if(this.props.deck.deck.questions.length > 0){
+    if(this.props.deck.questions.length > 0){
       this.props.navigation.navigate('Quiz');
     } else {
       Alert.alert(
@@ -20,7 +20,7 @@ class Deck extends PureComponent{
   }
 
   render() {
-    const {deck} = this.props.deck;
+    const {deck} = this.props;
     const cards = deck.questions.length;
 
     return (

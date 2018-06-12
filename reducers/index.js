@@ -6,10 +6,17 @@ import {
 } from '../actions/types';
 import {combineReducers} from 'redux';
 
-function decks(state = [], action){
+const INIT_STATE = {
+  deckList: []
+}
+
+function decks(state = INIT_STATE, action){
   switch(action.type){
     case GET_DECKS:
-      return action.deckList;
+      return {
+        ...state,
+        deckList: state.deckList.concat(action.deckList)
+      }
     case ADD_DECK:
       return {
         ...state,
@@ -18,15 +25,12 @@ function decks(state = [], action){
     case ADD_CARD:
       const newState = Object.assign({}, state);
       newState.deckList.map((d, i)=>{
-        if(d.title === action.card.deck){
-          newState.deckList[i].questions.push({
-            question: action.card.question,
-            answer: action.card.answer
-          });
+        if(d.title === action.deckWithNewCard.title){
+          newState.deckList[i] = action.deckWithNewCard
         }
         return null;
       });
-      return {...newState};
+      return newState;
     default:
       return state;
   }

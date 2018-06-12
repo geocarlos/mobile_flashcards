@@ -10,7 +10,8 @@ import {
   Alert
 } from 'react-native';
 import {connect} from 'react-redux';
-import {addCard, getDeck} from '../actions'
+import {addCard, getDeck} from '../actions';
+import { addCardToDeck } from '../actions/thunk_helpers';
 
 class NewQuestion extends Component{
 
@@ -23,8 +24,8 @@ class NewQuestion extends Component{
   /**
     All of the keyboard-related code is necessary because KeyboardAvoidingView
     is currently not working with Android. If this app was to be developed
-    for iOS, all of this might be replaced with the KeyboardAvoidingView component.
-  */
+    for iOS, all of this might be replaced with the KeyboardAvoidingView component.*/
+
   componentDidMount () {
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow.bind(this));
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide.bind(this));
@@ -54,12 +55,14 @@ class NewQuestion extends Component{
       Alert.alert("","You must provide a question and an answer!");
       return;
     }
-    const {deck} = this.props.deck;
+    const {deck} = this.props;
 
-    this.props.dispatch(addCard({
-      deck: deck.title,
-      question: question,
-      answer: answer
+    this.props.dispatch(addCardToDeck({
+      ...deck,
+      questions: deck.questions.concat({
+        question: question,
+        answer: answer
+      })
     }))
     this.setState({question: ""})
     this.setState({answer: ""})

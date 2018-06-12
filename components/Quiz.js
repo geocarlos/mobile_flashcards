@@ -34,7 +34,7 @@ class Quiz extends Component{
       this.flipCard();
     }
 
-    const {deck} = this.props.deck;
+    const {deck} = this.props;
 
     if(this.state.card < deck.questions.length){
       this.setState({
@@ -127,7 +127,7 @@ class Quiz extends Component{
       ]
     }
 
-    const {deck} = this.props.deck;
+    const {deck} = this.props;
     const {card, score, showA} = this.state;
 
     if(card >= deck.questions.length){
