@@ -73,9 +73,9 @@ export function addCardToDeck(deckWithNewCard){
 
 /**
   clearAll()
-  Give the user the ability to clear all data this application.
+  Give the user the ability to delete all the decks.
   After the whole MobileFlashcards:decks object is removed
-  from AsyncStorage, GET_DECKS is dispatch to update the store*/
+  from AsyncStorage, GET_DECKS is dispatched to update the store*/
 
 export function clearAll(){
   return (dispatch) =>{

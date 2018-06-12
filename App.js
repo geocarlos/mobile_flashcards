@@ -10,6 +10,7 @@ import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import reducer from './reducers';
 import thunk from 'redux-thunk';
+import { setLocalNotification } from './utils/helpers';
 
 const Tabs = createMaterialTopTabNavigator({
   Decks:{
@@ -69,6 +70,10 @@ const DeckStack = createStackNavigator({
 })
 
 export default class App extends React.PureComponent {
+
+  componentDidMount(){
+    setLocalNotification();
+  }
 
   render() {
     return (

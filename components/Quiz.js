@@ -7,6 +7,7 @@ import {
   Animated,
   TouchableOpacity
 } from 'react-native';
+import {clearLocalNotification, setLocalNotification} from '../utils/helpers';
 
 /**
   The code to flip the card has been adapted from the one found
@@ -16,8 +17,7 @@ import {
   the answer goes on top of the view for the question. Because of that, in order
   to click on the "View Answer" button, I need to remove the Answer view,
   instead of just setting its opacity to 0. So, the Answer view will be rendered
-  or not, depending on the value of the "showA" property in this component's state.
-*/
+  or not, depending on the value of the "showA" property in this component's state.*/
 
 class Quiz extends Component{
 
@@ -95,9 +95,13 @@ class Quiz extends Component{
       this.springValue,
       {
         toValue: 1,
-        friction: 2
+        friction: 3
       }
-    ).start()
+    ).start();
+    // Notification is cleared and set up again whenever the user finishes
+    // a quiz. 
+    clearLocalNotification()
+    .then(setLocalNotification);
   }
 
   _goBack(){
