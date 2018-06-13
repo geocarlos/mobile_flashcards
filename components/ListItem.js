@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import {getDeck} from '../actions';
+import { MaterialCommunityIcons as MCI } from '@expo/vector-icons';
 
 class ListItem extends PureComponent {
 
@@ -19,7 +20,9 @@ class ListItem extends PureComponent {
           <Text style={styles.deckTitle}>
             {deck.title}
           </Text>
-          <Text style={styles.cardCount}>{cards} {`${cards == 1 ? 'card' : 'cards'}`}</Text>
+          <Text style={styles.cardCount}>
+            <MCI name='cards' size={20} color='#00838f' /> {cards} {`${cards == 1 ? 'card' : 'cards'}`}
+          </Text>
         </View>
       </TouchableOpacity>
     );
@@ -31,7 +34,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderWidth: 1,
     borderRadius: 2,
-    borderColor: '#ddd',
+    borderColor: '#00838f',
     borderBottomWidth: 0,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2},

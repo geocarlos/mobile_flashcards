@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   container:{
     borderWidth: 1,
     borderRadius: 2,
-    borderColor: '#ddd',
+    borderColor: '#00838f',
     borderBottomWidth: 0,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2},
@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     borderWidth: 1,
     borderRadius: 3,
+    borderColor: '#00838f',
     marginLeft: '5%',
     marginRight: '5%',
     marginTop: 10,
@@ -145,7 +146,8 @@ const styles = StyleSheet.create({
   button:{
     borderWidth: 1,
     borderRadius: 2,
-    borderColor: '#447',
+    borderColor: '#00838f',
+    backgroundColor: '#00838f',
     marginLeft: '10%',
     marginRight: '10%',
     marginTop: 10
@@ -153,6 +155,7 @@ const styles = StyleSheet.create({
   buttonText:{
     fontSize: 20,
     padding: 10,
+    color: '#fefefe',
     textAlign: 'center'
   }
 })

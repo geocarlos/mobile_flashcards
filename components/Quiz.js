@@ -99,7 +99,7 @@ class Quiz extends Component{
       }
     ).start();
     // Notification is cleared and set up again whenever the user finishes
-    // a quiz. 
+    // a quiz.
     clearLocalNotification()
     .then(setLocalNotification);
   }
@@ -151,11 +151,11 @@ class Quiz extends Component{
             <View style={styles.buttons}>
               <TouchableOpacity onPress={this.restartQuiz.bind(this)}>
                 <View style={styles.button}>
-                  <Text style={styles.buttonText}>Restart Quiz</Text>
+                  <Text style={[styles.buttonText, {color: '#00838f'}]}>Restart Quiz</Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity onPress={this._goBack.bind(this)}>
-                <View style={styles.button}>
+                <View style={[styles.button, {backgroundColor: '#00838f'}]}>
                   <Text style={styles.buttonText}>Back to Deck</Text>
                 </View>
               </TouchableOpacity>
@@ -187,12 +187,12 @@ class Quiz extends Component{
             </Animated.View>}
             <View style={styles.buttons}>
               <TouchableOpacity onPress={this.goToNextCard.bind(this, 1)}>
-                <View style={styles.button}>
+                <View style={[styles.button, {backgroundColor: '#00838f'}]}>
                   <Text style={styles.buttonText}>Correct</Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity onPress={this.goToNextCard.bind(this, 0)}>
-                <View style={styles.button}>
+                <View style={[styles.button, {backgroundColor: '#de0000'}]}>
                   <Text style={styles.buttonText}>Incorrect</Text>
                 </View>
               </TouchableOpacity>
@@ -210,29 +210,34 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   flipCard: {
-    minWidth: '100%',
+    minWidth: '95%',
     height: 330,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#e0e0e0',
+    backgroundColor: '#fefefe',
     backfaceVisibility: 'hidden',
+    borderWidth: 1,
+    borderRadius: 3,
+    borderColor: '#00838f',
   },
   flipCardBack: {
-    backgroundColor: "#ededed",
+    minWidth: '95%',
+    backgroundColor: "#fefefe",
     position: "absolute",
+    borderWidth: 1,
+    borderRadius: 2,
+    borderColor: '#00838f',
     top: 25,
   },
   flipText: {
     width: 300,
     fontSize: 30,
     color: '#333',
-    fontWeight: 'bold',
     textAlign: 'center'
   },
   qa: {
-    // marginTop: 50,
     fontSize: 25,
-    color: '#f00'
+    color: '#00838f'
   },
   buttons:{
     paddingRight: 20,
@@ -241,7 +246,7 @@ const styles = StyleSheet.create({
   button:{
     borderWidth: 1,
     borderRadius: 2,
-    borderColor: '#447',
+    borderColor: '#00838f',
     marginLeft: 15,
     marginRight: 15,
     marginTop: 15
@@ -249,6 +254,7 @@ const styles = StyleSheet.create({
   buttonText:{
     fontSize: 20,
     padding: 10,
+    color: '#fefefe',
     textAlign: 'center'
   },
   ending: {

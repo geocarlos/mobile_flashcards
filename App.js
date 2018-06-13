@@ -11,33 +11,36 @@ import {Provider} from 'react-redux';
 import reducer from './reducers';
 import thunk from 'redux-thunk';
 import { setLocalNotification } from './utils/helpers';
+import { FontAwesome, Foundation, Entypo } from '@expo/vector-icons';
 
 const Tabs = createMaterialTopTabNavigator({
   Decks:{
     screen: DeckList,
     navigationOptions:{
-      tabBarLabel: 'Decks'
+      tabBarLabel: ()=> <Text style={{color: '#fefefe', fontSize: 25}}><Foundation name='list' size={25} /> Decks</Text>
     }
   },
   NewDeck:{
     screen: NewDeck,
     navigationOptions:{
-      tabBarLabel: 'New Deck',
+      tabBarLabel: ()=> <Text style={{color: '#fefefe', fontSize: 25}}>New Deck <Entypo name='add-to-list' size={25} /></Text>
     }
   },
 },{
   tabBarOptions: {
     labelStyle: {
-      color: '#d83',
-      fontSize: 20,
-      paddingTop: 15
+      paddingTop: 5
     },
     tabStyle: {
-      height: 100,
+      height: 60,
+      paddingBottom: 1
     },
     style: {
-      backgroundColor: '#eee',
+      backgroundColor: '#00838f',
     },
+    indicatorStyle:{
+      backgroundColor: '#56c8d8'
+    }
   }
 }
 )
@@ -46,25 +49,49 @@ const DeckStack = createStackNavigator({
   Tabs:{
     screen: Tabs,
     navigationOptions:{
-      header: null
+      headerStyle: {
+        backgroundColor: '#005662',
+        height: 5
+      }
     }
   },
   Deck:{
     screen: Deck,
     navigationOptions:({navigation})=>({
-      title: `${navigation.state.params.pageTitle} Deck`
+      title: `${navigation.state.params.pageTitle} Deck`,
+      headerStyle: {
+        backgroundColor: '#00838f',
+      },
+      headerTitleStyle: {
+        color: '#fefefe'
+      },
+      headerTintColor: '#fefefe'
     })
   },
   Quiz: {
     screen: Quiz,
     navigationOptions:{
-      title: 'Quiz'
+      title: 'Quiz',
+      headerStyle: {
+        backgroundColor: '#00838f'
+      },
+      headerTitleStyle: {
+        color: '#fefefe'
+      },
+      headerTintColor: '#fefefe'
     }
   },
   NewQuestion:{
     screen: NewQuestion,
     navigationOptions:{
-      title: 'Add Card'
+      title: 'Add Card',
+      headerStyle: {
+        backgroundColor: '#00838f'
+      },
+      headerTitleStyle: {
+        color: '#fefefe'
+      },
+      headerTintColor: '#fefefe'
     }
   }
 })

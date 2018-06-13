@@ -17,15 +17,13 @@ const DECKS_STORAGE_KEY = 'MobileFlashcards:decks';
 
 export function getDeckList(){
 
+  /* In order to save the mock decks, uncomment the return below, run the app,
+    then comment it out again*/
+
   // return (dispatch) =>{
   //   AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(getMockDecks()))
   //   .then(()=> dispatch(actions.getDecks(Object.values(getMockDecks()))))
   //   .catch(()=> console.log('Decks failed to save.'))
-  // }
-
-  // return (dispatch) =>{
-  //   AsyncStorage.removeItem(DECKS_STORAGE_KEY)
-  //   .then(()=> dispatch(actions.getDecks([])))
   // }
 
   return (dispatch)=>{

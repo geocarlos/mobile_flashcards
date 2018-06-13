@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Alert} from 'react-native';
 import {connect} from 'react-redux';
+import { MaterialCommunityIcons as MCI } from '@expo/vector-icons';
 
 class Deck extends PureComponent{
 
@@ -25,6 +26,9 @@ class Deck extends PureComponent{
 
     return (
         <View style={styles.container}>
+          <Text style={{textAlign: 'center'}}>
+            <MCI name='cards' size={100} color='#00838f' />
+          </Text>
           <Text style={styles.deckTitle}>
             {deck.title}
           </Text>
@@ -32,12 +36,14 @@ class Deck extends PureComponent{
           <View style={styles.buttons}>
             <TouchableOpacity onPress={this.addCard.bind(this)}>
               <View style={styles.button}>
-                <Text style={styles.buttonText}>Add Card</Text>
+                <Text style={[styles.buttonText, {color: '#00838f'}]}>Add Card</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={this.startQuiz.bind(this)}>
               <View style={styles.button}>
-                <Text style={styles.buttonText}>Start Quiz</Text>
+                <Text style={[styles.buttonText, {color: '#fefefe', backgroundColor: '#00838f'}]}>
+                  Start Quiz
+                </Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -51,7 +57,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderWidth: 1,
     borderRadius: 2,
-    borderColor: '#ddd',
+    borderColor: '#00838f',
     borderBottomWidth: 0,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2},
@@ -62,7 +68,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
     marginTop: 10,
     padding: 15,
-    paddingTop: 80
+    paddingTop: 50
   },
   deckTitle:{
     fontSize: 35,
@@ -76,12 +82,12 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   buttons:{
-    marginTop: 100
+    marginTop: 30
   },
   button:{
     borderWidth: 1,
     borderRadius: 2,
-    borderColor: '#447',
+    borderColor: '#00838f',
     marginLeft: 15,
     marginRight: 15,
     marginTop: 15
