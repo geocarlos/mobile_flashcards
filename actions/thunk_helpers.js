@@ -61,7 +61,6 @@ export function saveDeckTitle(deck){
   This is used when adding a new card and when editing a card*/
 
 export function updateDeckCards(deckToUpdate){
-  console.log("Cards: ",deckToUpdate.questions)
   return (dispatch)=>{
     AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
       [deckToUpdate.title]: deckToUpdate

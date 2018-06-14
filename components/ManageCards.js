@@ -25,7 +25,16 @@ class ManageCards extends PureComponent{
     this.setState({
       cards: this.props.deck.questions
     })
-    this.props.navigation.setParams({save: this.saveChanges.bind(this)})
+
+    // Persist changes
+    this.props.navigation.addListener(
+      'willBlur', ()=>{
+        if(this.state.thereAreChanges){
+          this.setState({thereAreChanges: false});
+          this.saveChanges();
+        }
+      }
+    )
   }
 
   _keyExtractor = (item, question) => item.question;
@@ -56,7 +65,8 @@ class ManageCards extends PureComponent{
 
   /**
     The new state does not become available before the functio has fully run,
-    that is why the change is dispatched to redux in a separate function.*/
+    that is why the changes are sent to storage in a separate function.*/
+
   saveChanges(){
     this.props.dispatch(saveCardChanges({
       title: this.props.deck.title,

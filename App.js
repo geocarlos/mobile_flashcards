@@ -71,7 +71,7 @@ const DeckStack = createStackNavigator({
       headerTintColor: '#fefefe',
       headerRight: (
         <View style={styles.navBtns}>
-          <TouchableOpacity onPress={()=>navigation.navigate('ManageDeck')}>
+          <TouchableOpacity onPress={()=>navigation.navigate('ManageDeck', {dName: navigation.state.params.pageTitle})}>
             <Text style={styles.navBtnsTxt}>Manage</Text>
           </TouchableOpacity>
         </View>)
@@ -105,8 +105,8 @@ const DeckStack = createStackNavigator({
   },
   ManageDeck:{
     screen: ManageDeck,
-    navigationOptions:{
-      title: 'Manage Deck',
+    navigationOptions:({navigation})=>({
+      title: `Manage ${navigation.state.params.dName}`,
       headerStyle: {
         backgroundColor: '#00838f'
       },
@@ -114,7 +114,7 @@ const DeckStack = createStackNavigator({
         color: '#fefefe'
       },
       headerTintColor: '#fefefe'
-    }
+    })
   },
   EditDeck:{
     screen: EditDeck,
@@ -132,7 +132,7 @@ const DeckStack = createStackNavigator({
   ManageCards:{
     screen: ManageCards,
     navigationOptions: ({navigation})=>({
-      title: 'Manage Cards',
+      title: `Manage ${navigation.state.params.dName} Cards`,
       headerStyle: {
         backgroundColor: '#00838f'
       },
@@ -140,12 +140,6 @@ const DeckStack = createStackNavigator({
         color: '#fefefe'
       },
       headerTintColor: '#fefefe',
-      headerRight: (
-        <View style={styles.navBtns}>
-          <TouchableOpacity onPress={()=>navigation.state.params.save()}>
-            <Text style={styles.navBtnsTxt}>Save Changes</Text>
-          </TouchableOpacity>
-        </View>)
     })
   }
 })
