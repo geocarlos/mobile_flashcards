@@ -52,7 +52,7 @@ class DeckList extends PureComponent{
   );
 
   render(){
-    
+
     return (
       <View>
         <FlatList

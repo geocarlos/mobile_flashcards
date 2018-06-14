@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { createStackNavigator, createMaterialTopTabNavigator} from 'react-navigation';
 import DeckList from './components/DeckList';
 import Deck from './components/Deck';
@@ -69,7 +69,12 @@ const DeckStack = createStackNavigator({
         color: '#fefefe'
       },
       headerTintColor: '#fefefe',
-      headerRight: <View><TouchableOpacity onPress={()=>navigation.navigate('ManageDeck')}><Text>Man</Text></TouchableOpacity></View>
+      headerRight: (
+        <View style={styles.navBtns}>
+          <TouchableOpacity onPress={()=>navigation.navigate('ManageDeck')}>
+            <Text style={styles.navBtnsTxt}>Manage</Text>
+          </TouchableOpacity>
+        </View>)
     })
   },
   Quiz: {
@@ -126,7 +131,7 @@ const DeckStack = createStackNavigator({
   },
   ManageCards:{
     screen: ManageCards,
-    navigationOptions:{
+    navigationOptions: ({navigation})=>({
       title: 'Manage Cards',
       headerStyle: {
         backgroundColor: '#00838f'
@@ -134,8 +139,14 @@ const DeckStack = createStackNavigator({
       headerTitleStyle: {
         color: '#fefefe'
       },
-      headerTintColor: '#fefefe'
-    }
+      headerTintColor: '#fefefe',
+      headerRight: (
+        <View style={styles.navBtns}>
+          <TouchableOpacity onPress={()=>navigation.state.params.save()}>
+            <Text style={styles.navBtnsTxt}>Save Changes</Text>
+          </TouchableOpacity>
+        </View>)
+    })
   }
 })
 
@@ -153,3 +164,16 @@ export default class App extends React.PureComponent {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  navBtns:{
+    borderWidth: 1,
+    borderColor: '#fefefe',
+    borderRadius: 3,
+    marginRight: 10,
+    padding: 5
+  },
+  navBtnsTxt: {
+    color: '#fefefe',
+  }
+})

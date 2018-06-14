@@ -55,11 +55,13 @@ export function saveDeckTitle(deck){
 }
 
 /**
+  updateDeckCards()
   Update deck in the MobileFlashcards:decks in the AsyncStorage and
   dispatch UPDATE_DECK_CARD and GET_DECK to update Redux store.
   This is used when adding a new card and when editing a card*/
 
 export function updateDeckCards(deckToUpdate){
+  console.log("Cards: ",deckToUpdate.questions)
   return (dispatch)=>{
     AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
       [deckToUpdate.title]: deckToUpdate

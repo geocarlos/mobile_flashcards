@@ -18,7 +18,8 @@ class QuestionForm extends Component{
   state = {
     question: '',
     answer: '',
-    viewHeight: '100%'
+    viewHeight: '100%',
+    index: null // Used if this form is called to edit an existing card
   }
 
   /**
@@ -32,8 +33,10 @@ class QuestionForm extends Component{
     if(this.props.card){
       this.setState({
         question: this.props.card.question,
-        answer: this.props.card.answer
+        answer: this.props.card.answer,
+        index: this.props.cards.indexOf(this.props.card)
       })
+
     }
   }
 
@@ -58,18 +61,28 @@ class QuestionForm extends Component{
     const question = this.state.question;
     const answer = this.state.answer;
     if(question === "" || answer == ""){
-      Alert.alert("","You must provide a question and an answer!");
+      Alert.alert("","The card must have a question and an answer!");
       return;
     }
     const {deck} = this.props;
 
-    this.props.dispatch(addCardToDeck({
-      ...deck,
-      questions: deck.questions.concat({
-        question: question,
-        answer: answer
-      })
-    }))
+    if(this.props.card){
+      this.props.saveChanges(
+        this.state.index,
+        {
+          question: question,
+          answer: answer
+        });
+    } else {
+      this.props.dispatch(addCardToDeck({
+        ...deck,
+        questions: deck.questions.concat({
+          question: question,
+          answer: answer
+        })
+      }))
+    }
+
     this.setState({question: ""})
     this.setState({answer: ""})
     Alert.alert(
@@ -77,7 +90,12 @@ class QuestionForm extends Component{
       'Would you like to go to Quiz or add more cards?',
       [
         {text: 'Quiz', onPress: () => {
-          this.props.navigation.navigate('Deck', {pageTitle: deck.title});
+          if(this.props.card){
+            // Close the editing form
+            this.props.cancel();
+          } else {
+            this.props.navigation.navigate('Deck', {pageTitle: deck.title});
+          }
         }},
         {text: 'Add more cards', onPress: () => {}},
       ],
@@ -110,6 +128,13 @@ class QuestionForm extends Component{
             <Text style={styles.buttonText}>Submit</Text>
           </View>
         </TouchableOpacity>
+        {this.props.card && <TouchableOpacity onPress={this.props.cancel}>
+          <View style={[styles.button, {backgroundColor: '#fefefe'}]}>
+            <Text style={[styles.buttonText, {color: '#00838f'}]}>
+              Cancel
+            </Text>
+          </View>
+        </TouchableOpacity>}
       </View>
     )
   }
