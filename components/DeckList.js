@@ -21,8 +21,8 @@ class DeckList extends PureComponent{
       pass the state of this component to extraData, it will rerender whenever
       that property is changed, even if I am doing nothing with this property.
       Ok, this is not a solution I could be proud of, but hey, this is my
-      first React Native app!
-    */
+      first React Native app!*/
+
     this.props.navigation.addListener(
       'willFocus', ()=>{
         this.setState({isFocused: true});
@@ -52,11 +52,11 @@ class DeckList extends PureComponent{
   );
 
   render(){
-
+    
     return (
       <View>
         <FlatList
-          data={this.props.decks.deckList}
+          data={Object.values(this.props.decks)}
           extraData={this.state}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}

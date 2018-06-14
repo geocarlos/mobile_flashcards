@@ -31,8 +31,8 @@ export function getDeckList(){
     .then((res)=>JSON.parse(res))
     .then((data)=>{
       if(data !== null){
-        deckList = Object.values(data);
-        dispatch(actions.getDecks(deckList));
+        // deckList = Object.values(data);
+        dispatch(actions.getDecks(data));
       }
     })
     .catch(()=>console.log("Unable to fetch data."))
@@ -49,23 +49,53 @@ export function saveDeckTitle(deck){
     AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
       [deck.title]: deck
     }))
-    .then(()=>dispatch(actions.addDeck(deck)))
+    .then(()=>dispatch(actions.updateDecks(deck)))
     .catch(()=>console.log(`Could not add ${deck.title}`))
   }
 }
 
 /**
   Update deck in the MobileFlashcards:decks in the AsyncStorage and
-  dispatch ADD_CARD and GET_DECK to update Redux store*/
+  dispatch UPDATE_DECK_CARD and GET_DECK to update Redux store.
+  This is used when adding a new card and when editing a card*/
 
-export function addCardToDeck(deckWithNewCard){
+export function updateDeckCards(deckToUpdate){
   return (dispatch)=>{
     AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
-      [deckWithNewCard.title]: deckWithNewCard
+      [deckToUpdate.title]: deckToUpdate
     }))
-    .then(()=>dispatch(actions.getDeck(deckWithNewCard)))
-    .then(()=>dispatch(actions.addCard(deckWithNewCard)))
-    .catch(()=>console.log(`Could not add card to ${deckWithNewCard.title}`))
+    .then(()=>dispatch(actions.updateDecks(deckToUpdate)))
+    .then(()=>dispatch(actions.getDeck(deckToUpdate)))
+    .catch((e)=>console.log(`Could not add card to ${deckToUpdate.title}`, e))
+  }
+}
+
+/**
+  updateDeckTitle()
+  Allow user to change the title of a deck. The deck is actually delete
+  and a new one is stored with all of its cards.*/
+
+export function updateDeckTitle(deckToUpdate, oldTitle, decks){
+  delete decks[oldTitle];
+  decks[deckToUpdate.title] = deckToUpdate;
+  return (dispatch)=>{
+    AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks))
+    .then(()=>dispatch(actions.updateDecks(deckToUpdate)))
+    .then(()=>dispatch(actions.getDeck(deckToUpdate)))
+    .catch((e)=>console.log('Could not update the title card', e))
+  }
+}
+
+/**
+  deleteDeck()
+  Allow user to delete a deck with all of its cards.*/
+
+export function deleteDeck(deckToDelete, decks){
+  delete decks[deckToDelete.title];
+  return (dispatch)=>{
+    AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks))
+    .then(()=>dispatch(getDeckList()))
+    .catch((e)=>console.log('Could not delete the deck', e))
   }
 }
 

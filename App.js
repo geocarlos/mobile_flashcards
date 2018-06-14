@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { createStackNavigator, createMaterialTopTabNavigator} from 'react-navigation';
 import DeckList from './components/DeckList';
 import Deck from './components/Deck';
@@ -12,6 +12,8 @@ import reducer from './reducers';
 import thunk from 'redux-thunk';
 import { setLocalNotification } from './utils/helpers';
 import { FontAwesome, Foundation, Entypo } from '@expo/vector-icons';
+import ManageDeck from './components/ManageDeck';
+import EditDeck from './components/EditDeck';
 
 const Tabs = createMaterialTopTabNavigator({
   Decks:{
@@ -65,7 +67,8 @@ const DeckStack = createStackNavigator({
       headerTitleStyle: {
         color: '#fefefe'
       },
-      headerTintColor: '#fefefe'
+      headerTintColor: '#fefefe',
+      headerRight: <View><TouchableOpacity onPress={()=>navigation.navigate('ManageDeck')}><Text>Man</Text></TouchableOpacity></View>
     })
   },
   Quiz: {
@@ -85,6 +88,32 @@ const DeckStack = createStackNavigator({
     screen: NewQuestion,
     navigationOptions:{
       title: 'Add Card',
+      headerStyle: {
+        backgroundColor: '#00838f'
+      },
+      headerTitleStyle: {
+        color: '#fefefe'
+      },
+      headerTintColor: '#fefefe'
+    }
+  },
+  ManageDeck:{
+    screen: ManageDeck,
+    navigationOptions:{
+      title: 'Manage Deck',
+      headerStyle: {
+        backgroundColor: '#00838f'
+      },
+      headerTitleStyle: {
+        color: '#fefefe'
+      },
+      headerTintColor: '#fefefe'
+    }
+  },
+  EditDeck:{
+    screen: EditDeck,
+    navigationOptions:{
+      title: 'Edit Deck',
       headerStyle: {
         backgroundColor: '#00838f'
       },

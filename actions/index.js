@@ -1,14 +1,20 @@
 import {
   GET_DECKS,
   GET_DECK,
-  ADD_DECK,
-  ADD_CARD
+  UPDATE_DECKS
 } from './types'
 
-export function getDecks(deckList=[]){
+export function getDecks(decks={}){
   return {
     type: GET_DECKS,
-    deckList
+    decks
+  }
+}
+
+export function updateDecks(deck){
+  return {
+    type: UPDATE_DECKS,
+    deck
   }
 }
 
@@ -16,19 +22,5 @@ export function getDeck(deck){
   return {
     type: GET_DECK,
     deck
-  }
-}
-
-export function addDeck(deck){
-  return {
-    type: ADD_DECK,
-    deck
-  }
-}
-
-export function addCard(deckWithNewCard){
-  return {
-    type: ADD_CARD,
-    deckWithNewCard
   }
 }

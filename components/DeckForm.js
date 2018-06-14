@@ -11,13 +11,12 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import {getDeck} from '../actions';
-import { updateDeckCards as addCardToDeck } from '../actions/thunk_helpers';
+import { saveDeckTitle, updateDeckTitle } from '../actions/thunk_helpers';
 
-class NewQuestion extends Component{
+class DeckForm extends Component{
 
   state = {
-    question: '',
-    answer: '',
+    deckName: '',
     viewHeight: '100%'
   }
 
@@ -29,6 +28,9 @@ class NewQuestion extends Component{
   componentDidMount () {
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow.bind(this));
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide.bind(this));
+    if(this.props.deck){
+      this.setState({deckName: this.props.deck.title});
+    }
   }
 
   componentWillUnmount () {
@@ -49,59 +51,75 @@ class NewQuestion extends Component{
   }
 
   onSubmit(){
-    const question = this.state.question;
-    const answer = this.state.answer;
-    if(question === "" || answer == ""){
-      Alert.alert("","You must provide a question and an answer!");
+    const dName = this.state.deckName;
+    if(dName === ""){
+      Alert.alert("Title field empty!","You cannot save a deck without a name!");
       return;
     }
-    const {deck} = this.props;
+    checkList = [];
+    if(this.props.decks.deckList){
+      checkList = this.props.decks.deckList.filter(function(d){
+        return d.title === dName;
+      });
+    }
 
-    this.props.dispatch(addCardToDeck({
-      ...deck,
-      questions: deck.questions.concat({
-        question: question,
-        answer: answer
-      })
-    }))
-    this.setState({question: ""})
-    this.setState({answer: ""})
-    Alert.alert(
-      `Card successfully added to ${deck.title}!`,
-      'Would you like to go to Quiz or add more cards?',
-      [
-        {text: 'Quiz', onPress: () => {
-          this.props.navigation.navigate('Deck', {pageTitle: deck.title});
-        }},
-        {text: 'Add more cards', onPress: () => {}},
-      ],
-      { cancelable: false }
-    )
+    if(checkList.length === 0){
+      if(this.props.deck){
+        this.props.dispatch(updateDeckTitle({
+          title: this.state.deckName,
+          questions: this.props.deck.questions
+        }, this.props.deck.title, this.props.decks))
+      } else {
+        this.props.dispatch(saveDeckTitle({
+          title: this.state.deckName,
+          questions: []
+        }))
+      }
+      this.setState({deckName: ""})
+      Alert.alert(
+        this.props.successMsg(dName),
+        this.props.successPrompt,
+        [
+          {text: 'Yes', onPress: () => {
+            if(!this.props.deck){
+              this.props.dispatch(getDeck(
+                this.props.decks[dName]
+              ))
+            }
+            this.props.navigation.navigate('Deck', {pageTitle: dName})
+          }},
+          {text: 'Not now', onPress: () => {}},
+        ],
+        { cancelable: false }
+      )
+    } else {
+    Alert.alert(this.props.deckExistTitle,
+      this.props.deckExistMsg(dName));
+    }
   }
 
   render(){
+
+    const {headerMsg, buttonText} = this.props;
+
+
     const justify = this.state.viewHeight === '100%' ? 'space-evenly':'flex-start';
     return (
       <View style={[styles.container, {justifyContent: justify, height: this.state.viewHeight}]}>
+        <Text style={styles.heading}>
+          {headerMsg}
+        </Text>
         <TextInput
-          ref={el => {this.question = el;}}
-          onChangeText={question => this.setState({question})}
+          ref={el => {this.deckName = el;}}
+          onChangeText={deckName => this.setState({deckName})}
           onSubmitEditing={this.onSubmit.bind(this)}
-          value={this.state.question}
+          value={this.state.deckName}
           style={styles.input}
-          placeholder='Enter question...'
-        />
-        <TextInput
-          ref={el => {this.answer = el;}}
-          onChangeText={answer => this.setState({answer})}
-          onSubmitEditing={this.onSubmit.bind(this)}
-          value={this.state.answer}
-          style={styles.input}
-          placeholder='Enter answer...'
+          placeholder='Enter Deck name...'
         />
         <TouchableOpacity onPress={this.onSubmit.bind(this)}>
           <View style={styles.button}>
-            <Text style={styles.buttonText}>Submit</Text>
+            <Text style={styles.buttonText}>{buttonText}</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -109,9 +127,8 @@ class NewQuestion extends Component{
   }
 }
 
-function mapStateToProps({deck, decks}){
+function mapStateToProps({decks}){
   return {
-    deck,
     decks
   }
 }
@@ -129,7 +146,11 @@ const styles = StyleSheet.create({
     elevation: 1,
     marginLeft: 5,
     marginRight: 5,
-    marginTop: 10
+  },
+  heading:{
+    fontSize: 35,
+    textAlign: 'center',
+    padding: 10,
   },
   input:{
     height: 70,
@@ -139,7 +160,6 @@ const styles = StyleSheet.create({
     borderColor: '#00838f',
     marginLeft: '5%',
     marginRight: '5%',
-    marginTop: 10,
     paddingLeft: 5,
     paddingRight: 5
   },
@@ -160,4 +180,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect(mapStateToProps)(NewQuestion);
+export default connect(mapStateToProps)(DeckForm);
