@@ -41,7 +41,7 @@ class ManageDeck extends PureComponent{
                 <Text style={[styles.buttonText, {color: '#00838f'}]}>Edit Deck Title</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=> alert('Manage cards')}>
+            <TouchableOpacity onPress={()=> this.props.navigation.navigate('ManageCards')}>
               <View style={styles.button}>
                 <Text style={[styles.buttonText, {color: '#00838f'}]}>Manage Deck Cards</Text>
               </View>

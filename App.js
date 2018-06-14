@@ -14,6 +14,7 @@ import { setLocalNotification } from './utils/helpers';
 import { FontAwesome, Foundation, Entypo } from '@expo/vector-icons';
 import ManageDeck from './components/ManageDeck';
 import EditDeck from './components/EditDeck';
+import ManageCards from './components/ManageCards';
 
 const Tabs = createMaterialTopTabNavigator({
   Decks:{
@@ -114,6 +115,19 @@ const DeckStack = createStackNavigator({
     screen: EditDeck,
     navigationOptions:{
       title: 'Edit Deck',
+      headerStyle: {
+        backgroundColor: '#00838f'
+      },
+      headerTitleStyle: {
+        color: '#fefefe'
+      },
+      headerTintColor: '#fefefe'
+    }
+  },
+  ManageCards:{
+    screen: ManageCards,
+    navigationOptions:{
+      title: 'Manage Cards',
       headerStyle: {
         backgroundColor: '#00838f'
       },
