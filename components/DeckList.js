@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
-import {Text, View, FlatList, StyleSheet} from 'react-native';
+import {Text, View, FlatList, StyleSheet, BackHandler} from 'react-native';
+import Initial from './Initial';
 import ListItem from './ListItem'
 import { getDeck } from '../actions';
 import { getDeckList } from '../actions/thunk_helpers';
@@ -12,6 +13,7 @@ class DeckList extends PureComponent{
   }
 
   componentDidMount(){
+
     this.props.dispatch(getDeckList());
 
     /**
@@ -23,17 +25,23 @@ class DeckList extends PureComponent{
       Ok, this is not a solution I could be proud of, but hey, this is my
       first React Native app!*/
 
-    this.props.navigation.addListener(
+    this.willFocusSubscription = this.props.navigation.addListener(
       'willFocus', ()=>{
         this.setState({isFocused: true});
       }
     )
 
-    this.props.navigation.addListener(
+    this.didBlurSubscription = this.props.navigation.addListener(
       'didBlur', ()=>{
         this.setState({isFocused: false});
       }
     )
+  }
+
+  componentWillUnmount(){
+    this.didBlurSubscription.remove();
+    this.willFocusSubscription.remove();
+    BackHandler.exitApp();
   }
 
   _keyExtractor = (item, title) => item.title;

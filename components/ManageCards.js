@@ -18,8 +18,8 @@ class ManageCards extends PureComponent{
   state = {
     cards: [],
     editingCard: null,
-    thereAreChanges: false
-  }
+    changes: 0 // This could be a boolean, but counting will force the FlatList to rerender.
+  }            //  For now, this is all it is doing.
 
   componentDidMount(){
     this.setState({
@@ -29,8 +29,8 @@ class ManageCards extends PureComponent{
     // Persist changes
     this.props.navigation.addListener(
       'willBlur', ()=>{
-        if(this.state.thereAreChanges){
-          this.setState({thereAreChanges: false});
+        if(this.state.changes > 0){
+          this.setState({changes: 0});
           this.saveChanges();
         }
       }
@@ -44,11 +44,24 @@ class ManageCards extends PureComponent{
   };
 
   deleteCard(card){
-    this.setState({thereAreChanges: true})
-    this.setState((state)=>{
-      state.cards.splice(state.cards.indexOf(card), 1);
-      return state.cards;
-    })
+    Alert.alert(
+      'Delete card',
+      'This card will be permanently delete when you leave this page. Are you sure?',
+      [
+        {
+          text: 'Yes', onPress: ()=>{
+            this.setState({changes: this.state.changes + 1})
+            this.setState((state)=>{
+              state.cards.splice(state.cards.indexOf(card), 1);
+              return state.cards;
+            })
+          }
+        },
+        {
+          text: 'No, cancel', onPress: ()=> {}
+        }
+      ]
+    )
   }
 
   editCard(card){
@@ -56,7 +69,7 @@ class ManageCards extends PureComponent{
   }
 
   updateCards(index, card){
-    this.setState({thereAreChanges: true})
+    this.setState({changes: this.state.changes + 1})
     this.setState((state)=>{
       state.cards.splice(index, 1, card);
       return state.cards
@@ -77,6 +90,17 @@ class ManageCards extends PureComponent{
   cancelEdit(){
     this.setState({editingCard: null});
   }
+
+  /* Buttons for the alert dialog at the edit form */
+  alertBtn = [
+    {
+      text: 'Ok', onPress: () => {
+        // This will make editingCard null so the edit form will not be
+        // rendered anymore
+        this.props.cancelEdit();
+      }
+    }
+  ]
 
   _renderItem = ({item}) => (
     <View style={styles.listItem}>
@@ -111,11 +135,13 @@ class ManageCards extends PureComponent{
             card={this.state.editingCard}
             cards={this.state.cards}
             saveChanges={(index, card)=> this.updateCards(index, card)}
+            cardSuccess={()=>`Card successfully edited`}
             cancel={()=>this.cancelEdit()}
           />
         </View> :
         <FlatList
-          data={Object.values(this.state.cards)}
+          data={this.state.cards}
+          extraData={this.state}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
         />}

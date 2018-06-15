@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     padding: 15
   },
   deckTitle:{
+    fontFamily: 'serif',
     fontSize: 30,
     textAlign: 'center',
     padding: 10,

@@ -66,6 +66,18 @@ class QuestionForm extends Component{
     }
     const {deck} = this.props;
 
+    const checkQuestions = deck.questions.filter((q)=>{
+      return q.question === question;
+    })
+
+    if(checkQuestions.length > 0){
+      Alert.alert(
+        "Repeated question!",
+        `${deck.title} already has that question.`
+      )
+      return;
+    }
+
     if(this.props.card){
       this.props.saveChanges(
         this.state.index,
@@ -85,19 +97,19 @@ class QuestionForm extends Component{
 
     this.setState({question: ""})
     this.setState({answer: ""})
+
+    const ed = !!this.props.card;
     Alert.alert(
-      `Card successfully added to ${deck.title}!`,
-      'Would you like to go to Quiz or add more cards?',
+      this.props.cardSuccess(deck.title),
+      this.props.moreCardsPrompt,
       [
-        {text: 'Quiz', onPress: () => {
-          if(this.props.card){
+        {
+          text: ed?'Ok':'Quiz', onPress: () => {
             // Close the editing form
-            this.props.cancel();
-          } else {
+            ed ? this.props.cancel() :
             this.props.navigation.navigate('Deck', {pageTitle: deck.title});
-          }
         }},
-        {text: 'Add more cards', onPress: () => {}},
+        !ed && {text: 'Add more cards', onPress: () => {}}
       ],
       { cancelable: false }
     )

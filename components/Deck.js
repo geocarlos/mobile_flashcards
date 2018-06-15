@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
     paddingTop: 50
   },
   deckTitle:{
+    fontFamily: 'serif',
     fontSize: 35,
     textAlign: 'center',
     padding: 10,
@@ -93,6 +94,7 @@ const styles = StyleSheet.create({
     marginTop: 15
   },
   buttonText:{
+    fontFamily: 'serif',
     fontSize: 20,
     padding: 10,
     textAlign: 'center'

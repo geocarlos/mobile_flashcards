@@ -15,18 +15,19 @@ import { FontAwesome, Foundation, Entypo } from '@expo/vector-icons';
 import ManageDeck from './components/ManageDeck';
 import EditDeck from './components/EditDeck';
 import ManageCards from './components/ManageCards';
+import Initial from './components/Initial'
 
 const Tabs = createMaterialTopTabNavigator({
   Decks:{
     screen: DeckList,
     navigationOptions:{
-      tabBarLabel: ()=> <Text style={{color: '#fefefe', fontSize: 25}}><Foundation name='list' size={25} /> Decks</Text>
+      tabBarLabel: <Text style={{color: '#fefefe', fontSize: 25}}><Foundation name='list' size={25} /> Decks</Text>
     }
   },
   NewDeck:{
     screen: NewDeck,
     navigationOptions:{
-      tabBarLabel: ()=> <Text style={{color: '#fefefe', fontSize: 25}}>New Deck <Entypo name='add-to-list' size={25} /></Text>
+      tabBarLabel: <Text style={{color: '#fefefe', fontSize: 25}}>New Deck <Entypo name='add-to-list' size={25} /></Text>
     }
   },
 },{
@@ -49,6 +50,12 @@ const Tabs = createMaterialTopTabNavigator({
 )
 
 const DeckStack = createStackNavigator({
+  Initial:{
+    screen: Initial,
+    navigationOptions:{
+      header: null
+    }
+  },
   Tabs:{
     screen: Tabs,
     navigationOptions:{

@@ -56,7 +56,7 @@ class DeckForm extends Component{
       Alert.alert("Title field empty!","You cannot save a deck without a name!");
       return;
     }
-    checkList = [];
+    let checkList = [];
     if(this.props.decks.deckList){
       checkList = this.props.decks.deckList.filter(function(d){
         return d.title === dName;
