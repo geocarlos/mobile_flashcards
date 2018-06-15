@@ -70,7 +70,8 @@ class QuestionForm extends Component{
       return q.question === question;
     })
 
-    if(checkQuestions.length > 0){
+    if((!this.props.card || (this.props.card.question !== question))
+      && checkQuestions.length > 0){
       Alert.alert(
         "Repeated question!",
         `${deck.title} already has that question.`

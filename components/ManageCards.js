@@ -46,7 +46,7 @@ class ManageCards extends PureComponent{
   deleteCard(card){
     Alert.alert(
       'Delete card',
-      'This card will be permanently delete when you leave this page. Are you sure?',
+      'This card will be permanently deleted when you leave this page. Are you sure?',
       [
         {
           text: 'Yes', onPress: ()=>{
