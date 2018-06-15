@@ -19,3 +19,7 @@ You may download this repository or, if you have Git on your computer, you may c
 If everything works as expected, you should see a QR Code somewhere on your terminal/commmand prompt/PowerShell. In order to run the application on your cellphone, you need to install Expo from Google Play Store, and then use it, with your phone camera, to read the QR Code, and Expo will run the app on your phone. (You may refer to Expo website to learn about packaging a React Native app as an APK with Expo, if you are a learner approaching that stage already.)
 
 You may also connect your phone to the computer, or use an emulator. In this case, the command to be run is `npm run android`.
+
+## Mock Data
+
+A file with some mock decks/cards, `mock_cards.js`, is included in the `utils` folder. Please refer to the file `/actions/thunk_helpers.js` to learn how you may use them.
